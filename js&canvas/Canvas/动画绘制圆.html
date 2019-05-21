@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Document</title>
+</head>
+<body>
+	<canvas>
+		
+	</canvas>
+	<script>
+		var canvas = document.querySelector('canvas');
+		var ctx = canvas.getContext("2d");
+		canvas.width = 600;
+		canvas.height = 400;
+		canvas.style.border = '1px solid #000';
+		function toAngle( radin ) {
+			return 180 * radin / Math.PI;
+		};
+		function toRadin( angle ) {
+			return Math.PI * angle / 180;
+		}
+
+		var a = -90;
+		ctx.fillStyle = 'pink';
+		var timeId = setInterval(function() {
+
+			ctx.clearRect(0, 0, canvas.width, canvas.height)
+			a+= 3;
+			if (a >= 270) {
+				a = 270
+				clearInterval( timeId );
+				alert('ok');
+			}
+			ctx.moveTo(canvas.width * .5, canvas.height * .5)
+			ctx.arc(canvas.width * .5, canvas.height * .5,
+			 		100, toRadin( -90 ), toRadin( a )
+			 )
+
+			ctx.fill()
+		}, 30)
+	</script>
+</body>
+</html>

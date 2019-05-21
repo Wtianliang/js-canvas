@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#award {
+			width: 200px;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+<div id="award"></div>
+<canvas style="position:absolute;top: 0;left: 0;"></canvas>
+<script>
+	var canvas = document.querySelector('canvas');
+	var context = canvas.getContext("2d");
+	canvas.width = 200;
+	canvas.height = 100;
+
+	function toAngle(radin) {
+		return 180 * radin / Math.PI;
+	};
+
+	function toRadin(angle) {
+		return Math.PI * angle / 180;
+	}
+	context.fillStyle = "#D1D1D1"; //设置填充色为浅灰色
+	context.fillRect(0, 0, 200, 100); //填充该颜色，以覆盖下方的背景图片
+	context.globalCompositeOperation = 'destination-out';
+	canvas.addEventListener('touchmove', function (event) {
+		event.preventDefault(); //先去除默认的响应行为
+		var touch = event.touches[0]; //获取触摸的第一个点
+		context.beginPath(); //开始路径的绘制
+		context.arc(touch.pageX - canvas.offsetLeft, touch.pageY - canvas.offsetTop, 20, 0, Math.PI * 2); //在所触摸处绘制圆形，半径为20像素
+		context.closePath(); //结束路径绘制
+		context.fillStyle = "#fff"; //随意设置一种绘制颜色
+		context.fill(); //填充该颜色
+		var imgData = context.getImageData(0, 0, 200, 100); //获取画布中的所有像素
+		var data = imgData.data; //得到像素的字节数据
+		var length = data.length; //获取该数据的长度
+		var transparent = 0; //设置一个变量来记录已经变为透明的像素点的数量
+		for (var i = 0; i < length; i += 4) { //循环遍历每一个像素
+			var alpha = data[i + 3]; //获取每个像素的透明度数值
+			if (alpha < 10) //当透明度小于10时，认为它已经被擦除，transparent数值加1
+				
+				transparent++;
+		}
+		var percentage = transparent / (length / 4); //计算透明像素在所有像素点中所占比例
+		if (percentage > 0.9) //当比例大于90%时，显示刮奖结束字样
+			alert("刮奖结束！");
+	})
+</script>
+</body>
+
+</html>

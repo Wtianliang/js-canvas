@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        function getLastTime(time) {
+            var endTime = +new Date(time);
+            var nowTime = +new Date();
+            var lastTime = (endTime - nowTime) / 1000;
+            var date = parseInt(lastTime / 60 / 60 / 24);
+            date = date < 10 ? '0' + date : date;
+            var h = parseInt(lastTime / 60 / 60 % 24);
+            h = h < 10 ? '0' + h : h;
+            var m = parseInt(lastTime / 60 % 60);
+            m = m < 10 ? '0' + m : m;
+            var s = parseInt(lastTime % 60);
+            s = s < 10 ? '0' + s : s;
+            return date + '天 ' + h + ':' + m + ':' + s;
+        }
+        console.log(getLastTime('2018-11-11 00:00:00'));
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
